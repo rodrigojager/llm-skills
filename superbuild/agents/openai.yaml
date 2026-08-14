@@ -1,0 +1,14 @@
+interface:
+  display_name: Superbuild
+  short_description: Gera prompts de execução com rigor verificável
+  default_prompt: Use $superbuild para gerar um prompt de execução rigoroso para o
+    meu projeto.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
