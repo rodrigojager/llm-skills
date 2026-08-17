@@ -67,6 +67,12 @@ Para cada dimensão relevante, criar uma linha de contrato de qualidade com:
 | Evidência | Artefato que comprova o resultado |
 | Severidade | Bloqueante, importante ou melhoria |
 
+Usar severidade somente para ordenar a correção. Todo achado confirmado,
+reproduzível, acionável e dentro do escopo bloqueia a conclusão, inclusive os de
+baixa severidade e as melhorias necessárias para cumprir o contrato de qualidade.
+Não aceitar preferências arbitrárias, exigências fora do escopo ou observações sem
+evidência como achados válidos.
+
 Selecionar somente dimensões aplicáveis. Consultar
 [quality-domains.md](references/quality-domains.md) para escolher gates de
 software, UI, jogos, dados/ML, pesquisa, documentos, infraestrutura,
@@ -158,11 +164,16 @@ Substituir qualquer `/loop` fictício por este ciclo real:
 6. classificar e corrigir causas, não apenas sintomas;
 7. repetir os gates afetados e depois a regressão integrada.
 
-Não parar no primeiro resultado aceitável. Continuar até todos os gates
-bloqueantes passarem ou existir um bloqueio real de autorização, material,
-ambiente ou viabilidade. Se o mesmo defeito persistir por três ciclos, mudar a
-abordagem e diagnosticar a causa-raiz em vez de repetir mecanicamente. Nunca
-usar um número arbitrário de iterações como prova de qualidade.
+Não parar no primeiro resultado aceitável nem encerrar porque restam apenas
+achados baixos ou cosméticos. Continuar pelo tempo necessário, inclusive em
+sessões prolongadas, até que todos os gates passem e uma auditoria integrada
+independente completa não encontre nenhum achado válido de qualquer severidade.
+Se uma nova rodada revelar outro achado, reabrir o ciclo, corrigir e auditar
+novamente. Parar sem aprovação somente diante de bloqueio real de autorização,
+material, ambiente ou viabilidade, descrevendo-o com precisão. Se o mesmo defeito
+persistir por três ciclos, mudar a abordagem e diagnosticar a causa-raiz em vez
+de repetir mecanicamente. Nunca usar um número arbitrário de iterações como prova
+de qualidade.
 
 ### Comparação e avaliação cega
 
@@ -191,15 +202,20 @@ o gap exato, seu impacto e o próximo passo.
 Exigir, antes de concluir:
 
 - execução de todos os gates bloqueantes e regressões relevantes;
-- revisão integrada sem achados críticos ou altos não resolvidos;
+- resolução de todo achado válido dentro do escopo, independentemente da
+  severidade;
+- ao menos uma auditoria integrada independente completa e limpa, sem novos
+  achados válidos;
 - inspeção real do artefato final, não apenas do código-fonte;
 - inventário de testes, medições, screenshots/renderizações, fontes ou logs;
 - instruções de execução/reprodução;
 - resumo de arquivos alterados, decisões, limitações e riscos residuais.
 
-Permitir conclusão somente com gates aprovados ou com bloqueio descrito de modo
-preciso. Proibir esconder falhas, reduzir silenciosamente o escopo ou afirmar
-que uma ferramenta/comando foi usado sem evidência.
+Permitir conclusão somente com todos os gates aprovados, zero achados válidos
+pendentes e auditoria integrada limpa, ou encerrar como bloqueado com o impedimento
+descrito de modo preciso. Proibir esconder, rebaixar ou reclassificar achados para
+concluir, reduzir silenciosamente o escopo ou afirmar que uma ferramenta/comando
+foi usado sem evidência.
 
 ## 5. Tratar comandos do Codex corretamente
 
