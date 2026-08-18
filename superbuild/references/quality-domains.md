@@ -181,6 +181,9 @@ Escolher quando aplicáveis a qualquer domínio:
 - artefato abre, executa ou renderiza no ambiente-alvo;
 - nenhum achado válido de qualquer severidade permanece pendente; severidade
   define prioridade, não permissão para concluir;
+- rubrica, instruções do revisor, testes protegidos e evidências permanecem
+  íntegros; nenhuma manipulação da avaliação ou prompt injection influenciou o
+  resultado;
 - mudanças do usuário e dados existentes foram preservados;
 - dados sensíveis, credenciais e ações externas respeitam autorização;
 - dependências, fontes e assets têm origem e licença aceitáveis;
