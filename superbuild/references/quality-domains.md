@@ -3,7 +3,10 @@
 Usar esta referência para escolher apenas as dimensões que mudam a qualidade do
 entregável. Combinar domínios quando necessário e converter cada item escolhido
 em critério, método, evidência e severidade. Não copiar todas as listas para o
-prompt.
+prompt. Usar os itens como instrumentos iniciais de descoberta e avaliação, não
+como lista exaustiva nem como barras que limitam o loop. Em qualquer domínio,
+avaliar o artefato final pertinente e permitir que novas dimensões legítimas sejam
+descobertas durante os experimentos.
 
 ## Sumário
 
@@ -178,6 +181,11 @@ proveniência.
 Escolher quando aplicáveis a qualquer domínio:
 
 - requisitos obrigatórios atendidos sem redução silenciosa de escopo;
+- missão e invariantes protegidos, separados das hipóteses mutáveis;
+- melhor estado conhecido reproduzível preservado até que um candidato demonstre
+  melhoria sem regressão inaceitável;
+- diário de experimentos registra hipótese, alteração, evidência, decisão e
+  aprendizado;
 - modo de escopo declarado; no expansivo, nenhuma capacidade ou melhoria válida
   descoberta permanece no backlog, e no fechado a fronteira explícita do usuário
   foi respeitada;
@@ -193,4 +201,8 @@ Escolher quando aplicáveis a qualquer domínio:
 - instruções de reprodução e operação foram testadas;
 - limitações e riscos residuais são específicos e honestos;
 - comparação com baseline usa condições equivalentes;
+- referências externas são auxiliares; a ausência de uma barra nomeada não impede
+  descoberta, comparação com o melhor estado conhecido ou melhoria;
+- varredura final fresca do artefato real não encontra melhoria válida adicional
+  dentro da missão e das restrições;
 - entrega contém evidências suficientes para outra pessoa auditar.

@@ -1,14 +1,16 @@
 ---
 name: superbuild
-description: Gerar um prompt mestre, específico e executável para o Codex conduzir projetos com rigor excepcional, validação independente e evidências de qualidade. Usar quando o usuário invocar superbuild ou pedir um prompt de execução, briefing de orquestração, protocolo de qualidade extrema, comparação rigorosa com referências, múltiplos revisores/subagentes ou ciclos de construção e auditoria para software, jogos, interfaces, dados, pesquisa, documentos, automações, mídia ou outro entregável complexo. Não usar apenas porque o usuário pediu uma implementação bem-feita; esta skill produz o prompt que comandará o trabalho, em vez de executar o projeto, salvo se o usuário pedir explicitamente as duas etapas.
+description: Gerar um prompt mestre, específico e executável para o Codex conduzir projetos com rigor excepcional, experimentação contínua, validação independente e evidências de qualidade. Usar quando o usuário invocar superbuild ou pedir um prompt de execução, briefing de orquestração, protocolo de melhoria autônoma, comparação rigorosa, múltiplos revisores/subagentes ou ciclos de construir, avaliar, manter/reverter e continuar para software, jogos, interfaces, dados, pesquisa, documentos, automações, mídia ou outro entregável complexo. Não usar apenas porque o usuário pediu uma implementação bem-feita; esta skill produz o prompt que comandará o trabalho, em vez de executar o projeto, salvo se o usuário pedir explicitamente as duas etapas.
 ---
 
 # Superbuild
 
 Gerar um prompt pronto para colar no Codex. Converter ambição subjetiva — como
-“perfeito”, “AAA” ou “igual ao melhor do mercado” — em missão e restrições
-explícitas, critérios mensuráveis, descoberta contínua, revisões independentes e
-evidências reproduzíveis.
+“perfeito”, “AAA” ou “igual ao melhor do mercado” — em missão, invariantes,
+experimentos comparáveis, descoberta contínua, revisões independentes e evidências
+reproduzíveis. Fazer o Codex melhorar em loop o **artefato real do domínio**, não
+apenas seu código: produto executável, experiência, conteúdo, resultado, operação
+ou outra superfície que determine sua qualidade.
 
 ## 1. Entender o pedido
 
@@ -28,11 +30,13 @@ do usuário. Se a escolha estiver aberta, mandar o Codex inspecionar o contexto,
 comparar opções e selecionar a alternativa mais adequada, registrando a
 justificativa e o custo de troca.
 
-Tratar uma referência como barra de qualidade por atributos, não como licença
-para copiar código, arte, texto, marcas ou conteúdo protegido. Distinguir
-“qualidade comparável” de “mesmo escopo”. Em pedidos de escala AAA ou similar,
-esclarecer se a referência vale para uma fatia vertical, um MVP ou o produto
-inteiro quando isso alterar materialmente a viabilidade.
+Tratar uma referência como fonte opcional de atributos, hipóteses e comparações,
+não como requisito para o loop nem como licença para copiar código, arte, texto,
+marcas ou conteúdo protegido. Distinguir “qualidade comparável” de “mesmo escopo”.
+O estado atual do próprio artefato deve bastar como baseline quando não existir uma
+referência externa adequada. Em pedidos de escala AAA ou similar, esclarecer se a
+referência vale para uma fatia vertical, um MVP ou o produto inteiro quando isso
+alterar materialmente a viabilidade.
 
 ## 2. Definir o modo de escopo
 
@@ -81,16 +85,19 @@ assets realmente disponíveis no projeto ou fornecidos pelo usuário, respeitar
 licenças e parar somente se uma aquisição, autenticação ou importação depender
 do usuário.
 
-## 4. Dimensionar o rigor
+## 4. Dimensionar o rigor e o sistema de melhoria
 
 Aplicar rigor alto por padrão, mas manter o processo proporcional ao risco e ao
 tamanho. Não inflar um trabalho pequeno com agentes e checklists sem benefício.
-Para cada dimensão relevante, criar uma linha de contrato de qualidade com:
+Separar **invariantes** de **objetivos de melhoria**. Invariantes são pisos que não
+podem regredir, como requisitos obrigatórios, segurança, correção e restrições do
+usuário; não são uma lista finita que, ao passar, prova que nada mais pode melhorar.
+Para cada dimensão relevante, criar uma linha de avaliação com:
 
 | Campo | Conteúdo |
 | --- | --- |
 | Dimensão | Aspecto a avaliar |
-| Critério de aprovação | Condição observável ou limiar |
+| Critério | Condição observável, preferência comparativa ou limiar |
 | Método | Teste, inspeção, benchmark ou comparação |
 | Evidência | Artefato que comprova o resultado |
 | Severidade | Bloqueante, importante ou melhoria |
@@ -104,6 +111,26 @@ evidência como achados válidos.
 No modo expansivo, considerar também como achado a ausência de uma capacidade ou
 melhoria válida descoberta durante pesquisa, uso ou revisão. A severidade define a
 ordem, não autoriza adiar itens válidos para uma lista futura.
+
+Fazer o prompt definir um sistema de experimentos aplicável ao domínio:
+
+- **missão e invariantes:** parte protegida que não muda para facilitar aprovação;
+- **artefato mutável:** qualquer superfície que determine o resultado real —
+  código, design, gameplay, conteúdo, dados, modelo, documento, mídia, configuração
+  ou operação;
+- **melhor estado conhecido:** baseline reproduzível ao qual cada candidato será
+  comparado;
+- **hipótese:** melhoria específica, seu efeito esperado e como observá-lo;
+- **decisão:** manter apenas candidatos que melhorem o resultado sem regressão
+  inaceitável; reverter ou isolar os demais;
+- **diário de experimentos:** hipótese, alteração, evidência, resultado, decisão e
+  próximo aprendizado.
+
+Preferir uma alteração coerente por experimento para preservar atribuição causal.
+Permitir lotes somente quando os itens forem independentes ou quando a natureza do
+domínio exigir uma mudança indivisível. Não exigir uma barra externa nomeada,
+buscável ou perfeitamente comparável. Usar referências quando ajudarem; usar o
+melhor estado conhecido e avaliação adaptada ao domínio quando não ajudarem.
 
 Selecionar somente dimensões aplicáveis. Consultar
 [quality-domains.md](references/quality-domains.md) para escolher gates de
@@ -134,12 +161,14 @@ dependências e materiais existentes antes de alterar qualquer coisa. Preservar
 mudanças do usuário e não substituir componentes funcionais sem justificativa.
 Listar stack fixa, decisões abertas, restrições, permissões e hipóteses.
 
-### Contrato de qualidade
+### Invariantes e avaliação
 
-Inserir a matriz específica de critérios, métodos, evidências e severidades.
-Fazer todo gate bloqueante ser binário o suficiente para impedir uma conclusão
-baseada apenas em opinião. Não transformar a matriz em inventário fechado de
-funcionalidades quando o modo for expansivo.
+Inserir invariantes protegidos e as dimensões iniciais de avaliação com critérios,
+métodos, evidências e severidades. Fazer gates de segurança, correção e restrições
+serem binários o suficiente para impedir conclusão baseada apenas em opinião. Usar
+preferência comparativa, múltiplos sinais e revisão independente para qualidades
+subjetivas. Tratar a matriz inicial como instrumentação, não como teto nem
+inventário fechado do que pode ser melhorado.
 
 ### Planejamento e arquitetura
 
@@ -148,7 +177,9 @@ atualizado e registrar decisões relevantes. Exigir uma fatia vertical ou prova
 de ponta a ponta cedo quando isso reduzir risco. Planejar rollback ou
 recuperação para alterações arriscadas. No modo expansivo, manter backlog vivo:
 cada rodada de pesquisa, uso e auditoria pode acrescentar itens, sem tratar o plano
-inicial como contrato terminal.
+inicial como contrato terminal. Manter também um checkpoint reproduzível do melhor
+estado conhecido e um diário de experimentos; não substituir o checkpoint por um
+candidato ainda não avaliado.
 
 ### Estratégia de stack, fontes e assets
 
@@ -180,6 +211,11 @@ Usar subagentes principalmente para trabalhos independentes, como:
 - descoberta de funcionalidades, fluxos e refinamentos ausentes;
 - segurança, desempenho, dados ou domínio especializado.
 
+Quando útil, separar três funções: explorador/crítico descobre e prioriza a próxima
+hipótese; autor executa o experimento; avaliador compara o candidato ao melhor
+estado conhecido. As funções podem ser passes isolados se não houver subagentes,
+mas autoria e aprovação não devem se confundir.
+
 Separar autoria de aprovação: quem implementa um aspecto não deve ser seu único
 revisor. Preferir revisores em modo somente leitura, retornando achados com
 severidade, evidência e ação sugerida. Executar agentes em paralelo apenas
@@ -191,12 +227,15 @@ inventar resultados de agentes.
 
 ### Integridade da avaliação e anti-gaming
 
-Mandar congelar antes da implementação a missão, as restrições, a rubrica, os
-limiares, as referências e os testes ou fixtures usados como gates. No modo
-expansivo, não congelar a lista de funcionalidades: registrar novas capacidades e
-seus gates à medida que forem legitimamente descobertos. Registrar versão, hash ou
-outro identificador quando possível. Permitir adicionar testes de regressão, mas
-não enfraquecer, substituir ou remover um gate protegido para facilitar aprovação.
+Mandar congelar antes dos experimentos a missão, as restrições, os invariantes e os
+testes ou fixtures protegidos. Antes de avaliar cada candidato, registrar também a
+hipótese, o método, as condições de comparação e os limiares aplicáveis. No modo
+expansivo, não congelar a lista de funcionalidades nem toda a rubrica futura:
+registrar novas capacidades, dimensões e gates à medida que forem legitimamente
+descobertos e então protegê-los contra enfraquecimento oportunista. Registrar
+versão, hash ou outro identificador quando possível. Permitir adicionar testes de
+regressão, mas não enfraquecer, substituir ou remover um gate protegido para
+facilitar aprovação.
 
 Proibir o agente principal, autores e corretores de:
 
@@ -234,33 +273,49 @@ declarar essa limitação e não alegar avaliação resistente a adulteração.
 
 Substituir qualquer `/loop` fictício por este ciclo real:
 
-1. estabelecer baseline e reproduzir o estado atual;
-2. pesquisar, usar e auditar para descobrir o próximo defeito ou oportunidade;
-3. atualizar o backlog e implementar a menor fatia verificável;
-4. executar verificações automatizadas e inspeções aplicáveis;
-5. coletar evidências;
-6. submeter a revisão independente;
-7. classificar e corrigir causas, não apenas sintomas;
-8. repetir os gates afetados e depois a regressão integrada.
+1. inspecionar o artefato real e estabelecer um baseline reproduzível como melhor
+   estado conhecido;
+2. executar uma busca crítica por defeitos, fricções, lacunas e oportunidades e
+   formar hipóteses priorizadas pelo impacto provável, não pela facilidade;
+3. escolher uma hipótese, declarar efeito esperado e método de avaliação antes de
+   alterar o artefato;
+4. produzir o menor candidato coerente que teste a hipótese no artefato do domínio;
+5. avaliar candidato e melhor estado conhecido em condições comparáveis, usando
+   testes, métricas, inspeção real e revisão independente que forem aplicáveis;
+6. manter e promover o candidato a novo melhor estado somente se houver melhoria
+   sustentada por evidência e nenhuma regressão inaceitável; caso contrário,
+   reverter, isolar ou abandonar o candidato;
+7. registrar hipótese, mudança, evidência, decisão e aprendizado no diário;
+8. repetir a busca a partir do novo melhor estado conhecido.
+
+Não confundir “experimento” com código: em uma interface, pode ser fluxo, copy ou
+hierarquia visual; em jogo, controle, física, conteúdo ou feedback; em pesquisa,
+fontes, análise ou síntese; em documento, narrativa ou layout; em mídia, composição,
+ritmo ou mixagem; em dados/ML, dados, método, modelo ou avaliação; em infraestrutura,
+configuração, resiliência ou operação. Sempre avaliar a saída real pertinente.
 
 Não parar no primeiro resultado aceitável nem encerrar porque restam apenas
-achados baixos ou cosméticos. Continuar pelo tempo necessário, inclusive em
-sessões prolongadas, até que todos os gates passem e uma auditoria integrada
-independente completa não encontre nenhum achado válido de qualquer severidade.
-No modo expansivo, a auditoria também deve procurar funcionalidades, fluxos e
-refinamentos ausentes; concluir somente quando não encontrar oportunidade válida
-adicional. Se uma nova rodada revelar outro achado ou oportunidade, reabrir o
-ciclo, ampliar o backlog, implementar e auditar novamente. Parar sem aprovação
-somente diante de bloqueio real de autorização,
-material, ambiente ou viabilidade, descrevendo-o com precisão. Se o mesmo defeito
-persistir por três ciclos, mudar a abordagem e diagnosticar a causa-raiz em vez
-de repetir mecanicamente. Nunca usar um número arbitrário de iterações como prova
-de qualidade.
+achados baixos, cosméticos ou oportunidades incrementais válidas. Não impor número
+de rodadas, prazo ou orçamento que o usuário não estabeleceu. Quando o backlog
+aparentar vazio, iniciar uma varredura de descoberta completa e fresca, cobrindo o
+artefato de ponta a ponta e procurando também novas dimensões de qualidade. Se ela
+encontrar qualquer melhoria válida, abrir nova hipótese e continuar. Concluir
+somente quando os invariantes passarem, não houver achado pendente e essa varredura
+não encontrar nenhuma melhoria válida adicional dentro da missão e das restrições.
 
-### Comparação e avaliação cega
+Parar sem aprovação somente diante de bloqueio real de autorização, material,
+ambiente ou viabilidade, descrevendo-o com precisão. Se hipóteses semelhantes
+falharem repetidamente, mudar a abordagem e diagnosticar a causa-raiz em vez de
+repetir mecanicamente. Nunca usar quantidade de iterações, tempo gasto, backlog
+pré-escrito ou o simples atingimento de uma barra como prova de exaustão.
 
-Quando houver referência ou baseline, exigir condições comparáveis. Para visuais,
-usar o mesmo viewport, estado, câmera, iluminação e resolução quando aplicável;
+### Comparação adaptativa e avaliação cega
+
+Comparar cada candidato ao melhor estado conhecido. Quando houver referência
+externa útil, usá-la adicionalmente para descobrir atributos e calibrar julgamentos,
+sem exigir que ela defina sozinha a aprovação. Exigir condições comparáveis. Para
+visuais, usar o mesmo viewport, estado, câmera, iluminação e resolução quando
+aplicável;
 para desempenho, o mesmo hardware/carga e metodologia; para resultados
 informacionais, a mesma pergunta, conjunto de casos e rubrica.
 
@@ -269,6 +324,10 @@ com rótulos aleatórios a um revisor independente, preservando o mapeamento for
 da avaliação. Não declarar teste cego se ele não foi realmente executado ou se
 a origem for evidente. Usar métricas objetivas como complemento, não como
 substituto de inspeção humana quando a qualidade percebida importar.
+
+Não exigir uma única métrica escalar em domínios multidimensionais. Registrar
+trade-offs; rejeitar “melhorias” que elevem um proxy enquanto degradam de forma
+inaceitável a experiência ou outra dimensão relevante.
 
 ### Regras de honestidade e autonomia
 
@@ -284,12 +343,18 @@ o gap exato, seu impacto e o próximo passo.
 Exigir, antes de concluir:
 
 - execução de todos os gates bloqueantes e regressões relevantes;
+- preservação de um melhor estado conhecido reproduzível e diário de experimentos
+  com decisões rastreáveis;
+- promoção apenas de candidatos com evidência de melhoria e reversão ou isolamento
+  dos candidatos rejeitados;
 - resolução de todo achado válido dentro do escopo, independentemente da
   severidade;
 - ao menos uma auditoria integrada independente completa e limpa, sem novos
   achados válidos;
 - no modo expansivo, auditoria de descoberta sem funcionalidade, fluxo ou
   refinamento válido adicional ainda ausente;
+- varredura final fresca do artefato real sem qualquer melhoria válida adicional
+  dentro da missão e das restrições;
 - confirmação de integridade de que rubrica, instruções do revisor, gates e
   evidências não foram enfraquecidos nem influenciados por prompt injection;
 - inspeção real do artefato final, não apenas do código-fonte;
@@ -333,8 +398,10 @@ Manter toda instrução operacional dentro do bloco. Não acrescentar uma longa
 explicação depois dele. O prompt deve ser detalhado o bastante para governar a
 execução, mas não tentar predeterminar exaustivamente o produto no modo expansivo.
 Descrever requisitos conhecidos como baseline mínimo, governar o mecanismo de
-descoberta e deixar o backlog evoluir com evidência. Remover cláusulas genéricas
-que não mudam o comportamento naquele caso.
+descoberta e experimentação e deixar o backlog evoluir com evidência. Priorizar um
+protocolo forte e adaptativo em vez de um prompt enorme com uma lista antecipada de
+todas as possíveis melhorias. Remover cláusulas genéricas que não mudam o
+comportamento naquele caso.
 
 ## Exemplos de adaptação
 
@@ -350,6 +417,9 @@ que não mudam o comportamento naquele caso.
 - **Pesquisa ou relatório:** trocar build/lint por protocolo de busca, fontes
   primárias, rastreabilidade das afirmações, checagem numérica, revisão crítica
   e QA visual do documento final.
+- **Qualquer domínio avaliável:** definir o artefato real, o melhor estado conhecido
+  e evidências apropriadas; experimentar sobre qualquer superfície relevante, não
+  presumir que o objeto mutável seja código.
 - **Pedido sem limite expresso:** tratar a lista inicial como baseline e continuar
   descobrindo capacidades e refinamentos relevantes até a auditoria expansiva
   ficar limpa.
