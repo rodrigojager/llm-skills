@@ -178,6 +178,9 @@ proveniência.
 Escolher quando aplicáveis a qualquer domínio:
 
 - requisitos obrigatórios atendidos sem redução silenciosa de escopo;
+- modo de escopo declarado; no expansivo, nenhuma capacidade ou melhoria válida
+  descoberta permanece no backlog, e no fechado a fronteira explícita do usuário
+  foi respeitada;
 - artefato abre, executa ou renderiza no ambiente-alvo;
 - nenhum achado válido de qualquer severidade permanece pendente; severidade
   define prioridade, não permissão para concluir;

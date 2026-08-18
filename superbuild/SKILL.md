@@ -6,8 +6,9 @@ description: Gerar um prompt mestre, específico e executável para o Codex cond
 # Superbuild
 
 Gerar um prompt pronto para colar no Codex. Converter ambição subjetiva — como
-“perfeito”, “AAA” ou “igual ao melhor do mercado” — em escopo explícito,
-critérios mensuráveis, revisões independentes e evidências reproduzíveis.
+“perfeito”, “AAA” ou “igual ao melhor do mercado” — em missão e restrições
+explícitas, critérios mensuráveis, descoberta contínua, revisões independentes e
+evidências reproduzíveis.
 
 ## 1. Entender o pedido
 
@@ -33,7 +34,34 @@ para copiar código, arte, texto, marcas ou conteúdo protegido. Distinguir
 esclarecer se a referência vale para uma fatia vertical, um MVP ou o produto
 inteiro quando isso alterar materialmente a viabilidade.
 
-## 2. Perguntar somente o que muda o prompt
+## 2. Definir o modo de escopo
+
+Usar **escopo expansivo** por padrão. Tratar funcionalidades, telas, etapas,
+entregáveis e exemplos mencionados pelo usuário como baseline mínimo e sementes de
+descoberta, não como lista exaustiva. Fazer o prompt mandar pesquisar referências,
+inspecionar o artefato e descobrir continuamente capacidades ausentes, fluxos,
+conteúdo, integrações, refinamentos e oportunidades de qualidade alinhados à
+missão. Manter um backlog emergente e implementar todo item válido antes de
+concluir.
+
+Usar **escopo fechado** somente quando o usuário limitar explicitamente o trabalho,
+por exemplo com uma lista declarada como completa, MVP ou fatia vertical fixa,
+prazo ou orçamento limitante, quantidade máxima, arquivos permitidos ou instrução
+de não adicionar funcionalidades. Nesse modo, descobrir e corrigir tudo dentro da
+fronteira, sem expandi-la. Não inferir escopo fechado apenas porque o pedido trouxe
+uma lista detalhada.
+
+Restrições de segurança, autorização, plataforma, licença, local de escrita e
+exclusões continuam obrigatórias nos dois modos. No modo expansivo, congelar a
+missão, essas restrições e o contrato de qualidade, mas nunca congelar o inventário
+de funcionalidades. Uma oportunidade só é válida quando é coerente com a missão e
+o público, traz melhoria observável e cabe nas restrições; evitar expansão aleatória
+para outro produto ou domínio.
+
+Declarar no prompt qual modo foi escolhido e por quê. Se houver ambiguidade sem
+limite explícito, escolher expansivo.
+
+## 3. Perguntar somente o que muda o prompt
 
 Fazer no máximo três perguntas curtas quando uma decisão ausente mudar
 materialmente a arquitetura, o acesso necessário ou o critério de sucesso.
@@ -53,7 +81,7 @@ assets realmente disponíveis no projeto ou fornecidos pelo usuário, respeitar
 licenças e parar somente se uma aquisição, autenticação ou importação depender
 do usuário.
 
-## 3. Dimensionar o rigor
+## 4. Dimensionar o rigor
 
 Aplicar rigor alto por padrão, mas manter o processo proporcional ao risco e ao
 tamanho. Não inflar um trabalho pequeno com agentes e checklists sem benefício.
@@ -73,6 +101,10 @@ baixa severidade e as melhorias necessárias para cumprir o contrato de qualidad
 Não aceitar preferências arbitrárias, exigências fora do escopo ou observações sem
 evidência como achados válidos.
 
+No modo expansivo, considerar também como achado a ausência de uma capacidade ou
+melhoria válida descoberta durante pesquisa, uso ou revisão. A severidade define a
+ordem, não autoriza adiar itens válidos para uma lista futura.
+
 Selecionar somente dimensões aplicáveis. Consultar
 [quality-domains.md](references/quality-domains.md) para escolher gates de
 software, UI, jogos, dados/ML, pesquisa, documentos, infraestrutura,
@@ -82,7 +114,7 @@ Não transformar métricas substitutas em objetivo cego. Por exemplo: cobertura
 não prova correção, FPS médio não prova fluidez e quantidade de fontes não prova
 qualidade da pesquisa.
 
-## 4. Gerar o prompt operacional
+## 5. Gerar o prompt operacional
 
 Produzir um único prompt autocontido, preenchido com os dados conhecidos e no
 idioma do usuário. Evitar placeholders genéricos quando for possível inferir ou
@@ -91,8 +123,9 @@ omitindo apenas as comprovadamente irrelevantes.
 
 ### Missão e resultado
 
-Definir o objetivo, entregáveis, público, ambiente-alvo, fronteira de escopo e
-o significado concreto da referência de qualidade.
+Definir o objetivo, baseline mínimo, público, ambiente-alvo, modo de escopo,
+restrições e o significado concreto da referência de qualidade. No modo
+expansivo, dizer expressamente que o baseline não limita a descoberta posterior.
 
 ### Verdade inicial e restrições
 
@@ -105,14 +138,17 @@ Listar stack fixa, decisões abertas, restrições, permissões e hipóteses.
 
 Inserir a matriz específica de critérios, métodos, evidências e severidades.
 Fazer todo gate bloqueante ser binário o suficiente para impedir uma conclusão
-baseada apenas em opinião.
+baseada apenas em opinião. Não transformar a matriz em inventário fechado de
+funcionalidades quando o modo for expansivo.
 
 ### Planejamento e arquitetura
 
 Mandar usar o mecanismo de planejamento disponível no Codex, manter o plano
 atualizado e registrar decisões relevantes. Exigir uma fatia vertical ou prova
 de ponta a ponta cedo quando isso reduzir risco. Planejar rollback ou
-recuperação para alterações arriscadas.
+recuperação para alterações arriscadas. No modo expansivo, manter backlog vivo:
+cada rodada de pesquisa, uso e auditoria pode acrescentar itens, sem tratar o plano
+inicial como contrato terminal.
 
 ### Estratégia de stack, fontes e assets
 
@@ -141,6 +177,7 @@ Usar subagentes principalmente para trabalhos independentes, como:
 - pesquisa ou benchmark de referência;
 - auditoria funcional e de testes;
 - auditoria visual/UX/acessibilidade;
+- descoberta de funcionalidades, fluxos e refinamentos ausentes;
 - segurança, desempenho, dados ou domínio especializado.
 
 Separar autoria de aprovação: quem implementa um aspecto não deve ser seu único
@@ -154,8 +191,10 @@ inventar resultados de agentes.
 
 ### Integridade da avaliação e anti-gaming
 
-Mandar congelar antes da implementação o escopo, a rubrica, os limiares, as
-referências e os testes ou fixtures usados como gates. Registrar versão, hash ou
+Mandar congelar antes da implementação a missão, as restrições, a rubrica, os
+limiares, as referências e os testes ou fixtures usados como gates. No modo
+expansivo, não congelar a lista de funcionalidades: registrar novas capacidades e
+seus gates à medida que forem legitimamente descobertos. Registrar versão, hash ou
 outro identificador quando possível. Permitir adicionar testes de regressão, mas
 não enfraquecer, substituir ou remover um gate protegido para facilitar aprovação.
 
@@ -196,19 +235,23 @@ declarar essa limitação e não alegar avaliação resistente a adulteração.
 Substituir qualquer `/loop` fictício por este ciclo real:
 
 1. estabelecer baseline e reproduzir o estado atual;
-2. implementar a menor fatia verificável;
-3. executar verificações automatizadas e inspeções aplicáveis;
-4. coletar evidências;
-5. submeter a revisão independente;
-6. classificar e corrigir causas, não apenas sintomas;
-7. repetir os gates afetados e depois a regressão integrada.
+2. pesquisar, usar e auditar para descobrir o próximo defeito ou oportunidade;
+3. atualizar o backlog e implementar a menor fatia verificável;
+4. executar verificações automatizadas e inspeções aplicáveis;
+5. coletar evidências;
+6. submeter a revisão independente;
+7. classificar e corrigir causas, não apenas sintomas;
+8. repetir os gates afetados e depois a regressão integrada.
 
 Não parar no primeiro resultado aceitável nem encerrar porque restam apenas
 achados baixos ou cosméticos. Continuar pelo tempo necessário, inclusive em
 sessões prolongadas, até que todos os gates passem e uma auditoria integrada
 independente completa não encontre nenhum achado válido de qualquer severidade.
-Se uma nova rodada revelar outro achado, reabrir o ciclo, corrigir e auditar
-novamente. Parar sem aprovação somente diante de bloqueio real de autorização,
+No modo expansivo, a auditoria também deve procurar funcionalidades, fluxos e
+refinamentos ausentes; concluir somente quando não encontrar oportunidade válida
+adicional. Se uma nova rodada revelar outro achado ou oportunidade, reabrir o
+ciclo, ampliar o backlog, implementar e auditar novamente. Parar sem aprovação
+somente diante de bloqueio real de autorização,
 material, ambiente ou viabilidade, descrevendo-o com precisão. Se o mesmo defeito
 persistir por três ciclos, mudar a abordagem e diagnosticar a causa-raiz em vez
 de repetir mecanicamente. Nunca usar um número arbitrário de iterações como prova
@@ -245,6 +288,8 @@ Exigir, antes de concluir:
   severidade;
 - ao menos uma auditoria integrada independente completa e limpa, sem novos
   achados válidos;
+- no modo expansivo, auditoria de descoberta sem funcionalidade, fluxo ou
+  refinamento válido adicional ainda ausente;
 - confirmação de integridade de que rubrica, instruções do revisor, gates e
   evidências não foram enfraquecidos nem influenciados por prompt injection;
 - inspeção real do artefato final, não apenas do código-fonte;
@@ -258,7 +303,7 @@ descrito de modo preciso. Proibir esconder, rebaixar ou reclassificar achados pa
 concluir, reduzir silenciosamente o escopo ou afirmar que uma ferramenta/comando
 foi usado sem evidência.
 
-## 5. Tratar comandos do Codex corretamente
+## 6. Tratar comandos do Codex corretamente
 
 Não incluir `/loop`: ele não é um mecanismo portátil do Codex. Não mandar o
 agente executar comandos de interface que pertencem ao usuário. Expressar no
@@ -276,7 +321,7 @@ Não fixar nomes internos de ferramentas, quantidade de agentes ou modelos que
 podem não existir na sessão-alvo. Mandar detectar capacidades disponíveis e
 usar fallbacks honestos.
 
-## 6. Formato da resposta
+## 7. Formato da resposta
 
 Entregar:
 
@@ -286,8 +331,10 @@ Entregar:
 
 Manter toda instrução operacional dentro do bloco. Não acrescentar uma longa
 explicação depois dele. O prompt deve ser detalhado o bastante para governar a
-execução, mas específico e proporcional; remover cláusulas genéricas que não
-mudam o comportamento naquele caso.
+execução, mas não tentar predeterminar exaustivamente o produto no modo expansivo.
+Descrever requisitos conhecidos como baseline mínimo, governar o mecanismo de
+descoberta e deixar o backlog evoluir com evidência. Remover cláusulas genéricas
+que não mudam o comportamento naquele caso.
 
 ## Exemplos de adaptação
 
@@ -303,3 +350,6 @@ mudam o comportamento naquele caso.
 - **Pesquisa ou relatório:** trocar build/lint por protocolo de busca, fontes
   primárias, rastreabilidade das afirmações, checagem numérica, revisão crítica
   e QA visual do documento final.
+- **Pedido sem limite expresso:** tratar a lista inicial como baseline e continuar
+  descobrindo capacidades e refinamentos relevantes até a auditoria expansiva
+  ficar limpa.
